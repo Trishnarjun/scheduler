@@ -20,5 +20,5 @@ storiesOf("Button", module)
   .add("Disabled", () => (
     <Button disabled onClick={action("button-clicked")}>
       Disabled
-    </Button>
+    </Button>  
   ));
