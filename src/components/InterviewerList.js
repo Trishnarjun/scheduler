@@ -9,13 +9,14 @@ export default function InterviewerList(props) {
     // console.log("2",props.interviewer)
     // console.log("3",interviewer.id)
     // let inrt = interviewer.id
+    console.log(interviewer)
     return (
       <InterviewerListItem 
         key={interviewer.id}
         name={interviewer.name} 
         avatar={interviewer.avatar} 
-        selected={interviewer.id === props.interviewer}
-        setInterviewer={() => props.setInterviewer(interviewer.id)}  
+        selected={interviewer.id === props.value}
+        setInterviewer={() => props.onChange(interviewer.id)}   
       />
     )
   })
