@@ -18,7 +18,7 @@ export function getInterview(state, interview) {
     return null
   }
   for (const [key, value] of Object.entries(state.interviewers)) {
-    if (key == interview.interviewer) {
+    if (Number(key) === interview.interviewer) {
       return {student: `${interview.student}`, interviewer: value}
     }
   }
