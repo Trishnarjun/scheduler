@@ -1,11 +1,19 @@
 import React from "react";
 import "./styles.scss";
-import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
-import { render } from "@testing-library/react";
+import Form from "./Form";
+import useVisualMode from "hooks/useVisualMode.js"
+
+const EMPTY = "EMPTY";
+const SHOW = "SHOW";
+const CREATE = "CREATE";
+
 
 export default function Appointment(props) {
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
   
   function refrac(props) {
     return (
@@ -13,16 +21,21 @@ export default function Appointment(props) {
     )
   }
 
-  if (!props.interview) {
+  if (mode === EMPTY) {
     return (
-      <article className="appointment">{props.time}<Empty/></article>
+      <article className="appointment">{props.time}<Empty onAdd={() => transition(CREATE)}/></article>
     )
-  } else if(props.interview) {
+  } else if(mode === SHOW) {
     console.log(props)
     return (
       <article className="appointment">{props.time}<Show student={props.interview.student} interviewer={props.interview.interviewer.name} /></article>
     )
   }
+  if (mode === CREATE) {
+    return (
+      <article className="appointment">{props.time}<Form interviewers={[]} onCancel={() => back()}/></article>
+    )
+  } 
 
   
   return (
