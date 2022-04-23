@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Appointment from "./Appointment";
 import "components/Application.scss";
 import DayList from "./DayList";
-import {getAppointmentsForDay, getInterview} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors"
 import axios from 'axios';
 
 // const days = [
@@ -72,26 +72,27 @@ export default function Application(props) {
   });
   const setDay = day => setState({...state, day})
   const dailyAppointments = getAppointmentsForDay(state, state.day)
+  const dailyInterviwers = getInterviewersForDay(state,state.day)
   //const setDays = days => setState(prev => ({ ...prev, days })) 
   // function setDay(day) {
-  //   let newstate = {day:day.day , days: state.days}
-  //   setState(newstate)
-  // }
-  
-  useEffect(() => {
-    Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
-    ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
-    })
-  }, [])
-  
-  console.log(state.interviewers)
-  //console.log(days)
-  return (
-    <main className="layout">
+    //   let newstate = {day:day.day , days: state.days}
+    //   setState(newstate)
+    // }
+    
+    useEffect(() => {
+      Promise.all([
+        axios.get('/api/days'),
+        axios.get('/api/appointments'),
+        axios.get('/api/interviewers')
+      ]).then((all) => {
+        setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+      })
+    }, [])
+    
+    console.log(state.interviewers)
+    //console.log(days)
+    return (
+      <main className="layout">
       <section className="sidebar">
       <img
   className="sidebar--centered"
@@ -120,7 +121,8 @@ export default function Application(props) {
               key={appointment.id} 
               id={appointment.id}
               time={appointment.time}
-              interview={interview} 
+              interview={interview}
+              interviewers={dailyInterviwers} 
             />
           )
         })}

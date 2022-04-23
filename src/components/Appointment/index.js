@@ -14,7 +14,6 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-  
   function refrac(props) {
     return (
       !props.time ? `No Appointments` : `Appointment at ${props.time}`
@@ -33,7 +32,7 @@ export default function Appointment(props) {
   }
   if (mode === CREATE) {
     return (
-      <article className="appointment">{props.time}<Form interviewers={[]} onCancel={() => back()}/></article>
+      <article className="appointment">{props.time}<Form interviewers={props.interviewers} onCancel={() => back()}/></article>
     )
   } 
 

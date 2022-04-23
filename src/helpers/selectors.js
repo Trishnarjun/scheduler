@@ -23,3 +23,17 @@ export function getInterview(state, interview) {
     }
   }
 }
+
+
+export function getInterviewersForDay(state, day) {
+  const mapped = state.days.map((obj) => {
+    if (obj.name === day){
+      return obj.interviewers
+    }})
+  const daysInterviewersmapped = mapped.filter(x => Array.isArray(x))
+  if (daysInterviewersmapped[0] === undefined) {
+    return []
+  }
+  const daysInterviewersAllmapped =  daysInterviewersmapped[0].map(x => state.interviewers[x])
+  return daysInterviewersAllmapped
+}
