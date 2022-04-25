@@ -1,8 +1,10 @@
 export function getAppointmentsForDay(state, day) {
-  const mapped = state.days.map((obj) => {
+  const mapped = state.days.map(obj => {
     if (obj.name === day){
-      return obj.appointments
-    }})
+      return obj.appointments;
+    }
+    return null
+  })
   const daysAppointsmapped = mapped.filter(x => Array.isArray(x))
   if (daysAppointsmapped[0] === undefined) {
     return []
@@ -29,7 +31,9 @@ export function getInterviewersForDay(state, day) {
   const mapped = state.days.map((obj) => {
     if (obj.name === day){
       return obj.interviewers
-    }})
+    }
+    return null
+  })
   const daysInterviewersmapped = mapped.filter(x => Array.isArray(x))
   if (daysInterviewersmapped[0] === undefined) {
     return []

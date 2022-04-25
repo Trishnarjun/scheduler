@@ -73,45 +73,84 @@ export default function Application(props) {
   const setDay = day => setState({...state, day})
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const dailyInterviwers = getInterviewersForDay(state,state.day)
+  
   //const setDays = days => setState(prev => ({ ...prev, days })) 
   // function setDay(day) {
     //   let newstate = {day:day.day , days: state.days}
     //   setState(newstate)
     // }
     
-    useEffect(() => {
-      Promise.all([
-        axios.get('/api/days'),
-        axios.get('/api/appointments'),
-        axios.get('/api/interviewers')
-      ]).then((all) => {
-        setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
-      })
-    }, [])
+  useEffect(() => {
+    Promise.all([
+      axios.get('http://localhost:8001/api/days'),
+      axios.get('http://localhost:8001/api/appointments'),
+      axios.get('http://localhost:8001/api/interviewers')
+    ]).then((all) => {
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+    })
+  }, [])
     
-    console.log(state.interviewers)
-    //console.log(days)
-    return (
-      <main className="layout">
-      <section className="sidebar">
-      <img
-  className="sidebar--centered"
-  src="images/logo.png"
-  alt="Interview Scheduler"
-/>
-<hr className="sidebar__separator sidebar--centered" />
-<nav className="sidebar__menu">
-  <DayList
-  days={state.days}
-  value={state.day}
-  onChange={setDay}/>
-  </nav>
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+    console.log(interview)
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview}).then(res =>{
+      //console.log("okay", res)
+    })
+  }
 
-<img
-  className="sidebar__lhl sidebar--centered"
-  src="images/lhl.png"
-  alt="Lighthouse Labs"
-/>
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    console.log(appointment.interview)
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    //console.log(interview)
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`).then(res =>{
+      // console.log("okay", res)
+      setState({
+        ...state,
+        appointments
+      });
+    })
+  }
+
+  return (
+    <main className="layout">
+      <section className="sidebar">
+        <img
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"
+        />
+        <hr className="sidebar__separator sidebar--centered" />
+        <nav className="sidebar__menu">
+          <DayList
+          days={state.days}
+          value={state.day}
+          onChange={setDay}/>
+          </nav>
+
+        <img
+          className="sidebar__lhl sidebar--centered"
+          src="images/lhl.png"
+          alt="Lighthouse Labs"
+        />
       </section>
       <section className="schedule">
         {dailyAppointments.map((appointment) => {
@@ -122,7 +161,9 @@ export default function Application(props) {
               id={appointment.id}
               time={appointment.time}
               interview={interview}
-              interviewers={dailyInterviwers} 
+              interviewers={dailyInterviwers}
+              bookInterview={bookInterview} 
+              cancelInterview={cancelInterview}
             />
           )
         })}
@@ -130,4 +171,4 @@ export default function Application(props) {
       </section>
     </main>
   );
-}
+} 
