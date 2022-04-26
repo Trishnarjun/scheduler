@@ -3,6 +3,7 @@ import "./styles.scss";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
+import Error from "./Error"
 import useVisualMode from "hooks/useVisualMode.js"
 import Status from "./Status";
 import Confirm from "./Confirm";
@@ -14,6 +15,8 @@ const SAVING = "SAVING";
 const CONFIRM = "CONFIRM";
 const DELETE = 'DELETE';
 const EDIT = 'EDIT';
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 
 export default function Appointment(props) {
@@ -32,24 +35,25 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    setTimeout(() => {
-      props.bookInterview(props.id,interview)
-      transition(SHOW)
-    }, 700)
-    transition(SAVING)
+
     
+    transition(SAVING);
+    console.log("attemping to save")
+
+    props
+      .bookInterview(props.id,interview)
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
+      
   }
 
   function clear() {
-    setTimeout(() => {
-      props.cancelInterview(props.id)
-      transition(EMPTY)
-    }, 700)
-    transition(DELETE)
-  }
-
-  function edit() {
-
+    transition(DELETE, true)
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE, true));
+  
   }
 
   if (mode === EMPTY) {
@@ -75,6 +79,17 @@ export default function Appointment(props) {
     )
   }
 
+  if (mode === ERROR_SAVE) {
+    return (
+      <article className="appointment">{props.time}<Error onClose={() => back()} message="Saving error, could not save"/></article>
+    )
+  }
+
+  if (mode === ERROR_DELETE) {
+    return (
+      <article className="appointment">{props.time}<Error onClose={() => back()} message="Deleting Error, could not delete"/></article>
+    )
+  }
 
   if (mode === CREATE) {
     return (
