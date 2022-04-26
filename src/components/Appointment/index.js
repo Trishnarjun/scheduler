@@ -31,15 +31,24 @@ export default function Appointment(props) {
   }
 
   function save(name,interviewer) {
+    let edit;
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING);
-    props
-      .bookInterview(props.id,interview)
-      .then(() => transition(SHOW))
-      .catch(error => transition(ERROR_SAVE, true));
+    if (mode === EDIT) {
+      props
+        .bookInterview(props.id,interview, true)
+        .then(() => transition(SHOW))
+        .catch(error => transition(ERROR_SAVE, true));
+    } else {
+      props
+        .bookInterview(props.id,interview, false)
+        .then(() => transition(SHOW))
+        .catch(error => transition(ERROR_SAVE, true));
+    }
+    
   }
 
   function clear() {
@@ -68,6 +77,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onSave={save} 
           onCancel={() => back()}
+          message="edit"
         />
       </article>
     )
