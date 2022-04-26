@@ -35,16 +35,11 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-
-    
     transition(SAVING);
-    console.log("attemping to save")
-
     props
       .bookInterview(props.id,interview)
       .then(() => transition(SHOW))
       .catch(error => transition(ERROR_SAVE, true));
-      
   }
 
   function clear() {
@@ -53,7 +48,6 @@ export default function Appointment(props) {
       .cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(error => transition(ERROR_DELETE, true));
-  
   }
 
   if (mode === EMPTY) {
