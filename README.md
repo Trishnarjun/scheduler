@@ -1,31 +1,8 @@
 # Interview Scheduler
 
-## Setup
+Interview Scheduler is a single-page interactive interview appointment calender.
 
-Install dependencies with `npm install`.
-
-## Running Webpack Development Server
-
-```sh
-npm start
-```
-
-## Running Jest Test Framework
-
-```sh
-npm test
-```
-
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
-# Interview Scheduler
-
-Tweeter is a simple, single-page Twitter clone.
-
-This repository is the code for the project: I have forked and cloned from the starter repository, then built upon it to practice my HTML, CSS, JS, jQuery and AJAX front-end skills, and their Node, Express back-end skills.
+This repository is the code for the project: I have cloned the Interview Scheduler by using the starter repository as the boilerplate, then built upon it to practice my REACT, AXIOS, JS, WEBPACK DEV SERVER, JEST, BABEL, STORYBOOK, TEST LIBRARY skills.
 
 ## Getting Started
 
@@ -33,17 +10,23 @@ This repository is the code for the project: I have forked and cloned from the s
 2. Clone your repository onto your local device.
 3. Install dependencies using the `npm install` command.
 3. Start the web server using the `npm start` command. The app will be served at <http://localhost:3000/>.
-4. You will need the Scheduler-api to be running; for the data to be saving post refresh.
+4. You will need the clone of [scheduler-api](https://github.com/Trishnarjun/scheduler-api) to be running; for the data to be saved post refresh.
 5. Go to <http://localhost:3000/> in your browser.
+
+# Testing
+
+- Running Jest Test Framework: `npm test`
+- Running Storybook Visual Testbed: `npm run storybook`
 
 ## Screenshots
 
-!["deskstop site of showing error when characters are too long"](https://github.com/Trishnarjun/tweeter/blob/master/docs/desktop-tweet-too-long.png)
-!["mobile site of showing tweets box"](https://github.com/Trishnarjun/tweeter/blob/master/docs/tweet-box.png)
+!["main page of the interview scheduler"](https://github.com/Trishnarjun/scheduler/blob/master/docs/main-page.png)
+!["the appointment form when clicked on empty spot"](https://github.com/Trishnarjun/scheduler/blob/master/docs/appointment-form.png)
+!["conform appointment UI component when user deletes appointment"](https://github.com/Trishnarjun/scheduler/blob/master/docs/confirm-ui.png)
 
 ## Dependencies
 
-- Express
-- Chance
-- body-parser
-- Node 5.10.x or above
+- axios
+- @testing-library/react-hooks
+- react-test-renderer
+- Node 15.10.x or above
