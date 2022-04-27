@@ -1,3 +1,6 @@
+//HELPER FUNCTIONS
+
+//getting appointments by selected days function
 export function getAppointmentsForDay(state, day) {
   const mapped = state.days.map(obj => {
     if (obj.name === day){
@@ -14,7 +17,7 @@ export function getAppointmentsForDay(state, day) {
 }
 
 
-
+//getting interviews for the the given appointments 
 export function getInterview(state, interview) {
   if (interview === null) {
     return null
@@ -26,7 +29,7 @@ export function getInterview(state, interview) {
   }
 }
 
-
+//getting interviewers for a given day  
 export function getInterviewersForDay(state, day) {
   const mapped = state.days.map((obj) => {
     if (obj.name === day){

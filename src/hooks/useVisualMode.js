@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+//function/hook for the changes and updating the state as user interactes with app
 export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
   function transition(mode, replace = false) { 

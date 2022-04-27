@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-
+//hook file
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: "Monday",
@@ -9,7 +9,7 @@ export default function useApplicationData() {
     appointments: {}
   });
   
-
+  //getting data from the database 
   useEffect(() => {
     Promise.all([
       axios.get('api/days'),
@@ -21,7 +21,7 @@ export default function useApplicationData() {
   }, [])
 
   const setDay = day => setState({...state, day})
-  
+  //function for updating spots without reloading when appointments are edited, made, or deleted 
   function updateSpots(requestType, edit) {
     const days = state.days.map((day) => {
       if (day.name === state.day) {
@@ -36,7 +36,7 @@ export default function useApplicationData() {
     return days;
   }
 
-
+  //function for when an appointment is booked; adding it to the state and updating backend
   function bookInterview(id, interview, edit = false) {
     console.log(id, interview, edit);
     const appointment = {
@@ -48,7 +48,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    return axios.put(`api/appointments/${id}`, {interview}).then(res =>{
+    return axios.put(`/api/appointments/${id}`, {interview}).then(res =>{
 
       const days = updateSpots("bookAppointment", edit)
 
@@ -59,7 +59,7 @@ export default function useApplicationData() {
       });
     })
   }
-  
+  //function for when an appointment is canceled; adding it to the state and updating backend
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -69,7 +69,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    return axios.delete(`api/appointments/${id}`).then(res =>{
+    return axios.delete(`/api/appointments/${id}`).then(res =>{
 
       const days = updateSpots()
 
