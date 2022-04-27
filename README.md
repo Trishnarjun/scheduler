@@ -10,7 +10,7 @@ This repository is the code for the project: I have cloned the Interview Schedul
 2. Clone your repository onto your local device.
 3. Install dependencies using the `npm install` command.
 3. Start the web server using the `npm start` command. The app will be served at <http://localhost:3000/>.
-4. You will need the clone of [scheduler-api](https://github.com/Trishnarjun/scheduler-api) to be running along side with with [scheduler](https://github.com/lighthouse-labs/scheduler/) by using the `npm start` command; for the data to be saved post refresh.
+4. You will need the clone of [scheduler-api](https://github.com/Trishnarjun/scheduler-api) to be running along side with with [scheduler](https://github.com/Trishnarjun/scheduler) by using the `npm start` command; for the data to be saved post refresh.
 5. Go to <http://localhost:3000/> in your browser.
 
 # Testing
